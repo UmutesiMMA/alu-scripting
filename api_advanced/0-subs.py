@@ -2,8 +2,8 @@
 """Number of subscribers"""
 
 import json
-import sys
 import requests
+import sys
 
 if __name__ == '__main__':
     def number_of_subscribers(subreddit):
@@ -18,4 +18,3 @@ if __name__ == '__main__':
             return 'nope'
         body = json.loads(res.text)
         return body['data']['subscribers']
-
