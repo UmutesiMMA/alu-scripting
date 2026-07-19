@@ -8,13 +8,14 @@ import sys
 
 def number_of_subscribers(subreddit):
     if len(sys.argv) < 2:
-        return 0
-    url = 'https://www.reddit.com/dev/api/r/{}/about.json'.format(
-        subreddit
-    )
-    headers = {"User-Agent": "Mozilla/5.0"}
-    res = requests.get(url, headers=headers, allow_redirects=False)
-    if res.status_code != 200:
-        return 0
-    body = json.loads(res.text)
-    return body['data']['subscribers']
+        print(None)
+    else:
+        url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+        headers = {"User-Agent": "Mozilla/5.0"}
+        res = requests.get(url, headers=headers, allow_redirects=False)
+        if res.status_code != 200:
+            print(None)
+        else:
+            data = json.loads(res.text)["data"]["children"]
+            for post in data[:10]:
+                print(post["data"]["title"])
