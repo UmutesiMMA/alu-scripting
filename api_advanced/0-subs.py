@@ -8,13 +8,13 @@ import sys
 
 def number_of_subscribers(subreddit):
     if len(sys.argv) < 2:
-        print(None)
+        print(0)
     else:
         url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
         headers = {"User-Agent": "Mozilla/5.0"}
         res = requests.get(url, headers=headers, allow_redirects=False)
         if res.status_code != 200:
-            print(None)
+            print(0)
         else:
             data = json.loads(res.text)["data"]["children"]
             for post in data[:10]:
