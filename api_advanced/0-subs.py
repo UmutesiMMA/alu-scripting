@@ -1,21 +1,14 @@
 #!/usr/bin/python3
 """Number of subscribers"""
 
-import json
 import requests
-import sys
 
 
 def number_of_subscribers(subreddit):
-    if len(sys.argv) < 2:
-        print(0)
-    else:
-        url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-        headers = {"User-Agent": "Mozilla/5.0"}
-        res = requests.get(url, headers=headers, allow_redirects=False)
-        if res.status_code != 200:
-            print(0)
-        else:
-            data = json.loads(res.text)["data"]["children"]
-            for post in data[:10]:
-                print(post["data"]["title"])
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    headers = {"User-Agent": "Mozilla/5.0"}
+    res = requests.get(url, headers=headers, allow_redirects=False)
+    print(res)
+    if res.status_code != 200:
+        return 0
+    return res.json().get("data", {}).get("subscribers", 0)
