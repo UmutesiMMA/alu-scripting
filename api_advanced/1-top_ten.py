@@ -1,13 +1,11 @@
 #!/usr/bin/python3
-"""Number of subscribers"""
+"""Top ten hot posts for a subreddit"""
 
-import json
 import requests
-import sys
 
 
 def top_ten(subreddit):
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {
         "User-Agent":
         "python:subreddit.subscriber.counter:v1.0 (by /u/Background_Lemon_726)"
@@ -16,6 +14,6 @@ def top_ten(subreddit):
     if res.status_code != 200:
         print(None)
     else:
-        data = json.loads(res.text)["data"]["children"]
+        data = res.json().get("data", {}).get("children", [])
         for post in data[:10]:
             print(post["data"]["title"])
