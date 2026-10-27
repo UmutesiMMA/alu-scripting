@@ -2,6 +2,7 @@
 """Top ten hot posts for a subreddit"""
 
 import requests
+from sys import argv
 
 
 def top_ten(subreddit):
@@ -17,3 +18,8 @@ def top_ten(subreddit):
         data = res.json().get("data", {}).get("children", [])
         for post in data[:10]:
             print(post["data"]["title"])
+if __name__ == "__main__":
+    if len(argv) > 1:
+        top_ten(argv[1])
+    else:
+        print("Usage: ./script.py <subreddit>")
