@@ -8,7 +8,7 @@ def top_ten(subreddit):
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {
         "User-Agent":
-        "python:subreddit.subscriber.counter:v1.0 (by /u/Background_Lemon_726)"
+        "python:subreddit.subscriber.counter:v1.3 (by /u/Background_Lemon_726)"
         }
     res = requests.get(url, headers=headers, allow_redirects=False)
     if res.status_code != 200:
