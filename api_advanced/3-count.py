@@ -18,15 +18,20 @@ def count_words(subreddit, word_list, after="", hot_list=[]):
 
     if response.status_code == 200:
 
+        # print(response.status_code)
         json_data = response.json()
         if (json_data.get('data').get('dist') == 0):
             return
-      
+        # get the 'after' value from the response to pass it on the request
+
+        # get title and append it to the hot_list
         for child in json_data.get('data').get('children'):
             title = child.get('data').get('title')
             hot_list.append(title)
 
-   
+        # variable after indicates if there is data on the next pagination
+        # on the reddit API after holds a unique name for that subreddit page.
+        # if it is None it indicates it is the last page.
         after = json_data.get('data').get('after')
         if after is not None:
             # print("got next page")
@@ -51,7 +56,7 @@ def count_words(subreddit, word_list, after="", hot_list=[]):
                         counter[word] += 1
             sorted_counter = dict(
                 sorted(counter.items(),
-                       key=lambda item: item[1], audioop.reverse=True))
+                       key=lambda item: item[1], reverse=True))
             for key, value in sorted_counter.items():
                 if value > 0:
                     print("{}: {}".format(key, value))
@@ -65,3 +70,6 @@ if __name__ == '__main__':
     count_words("hello", ['REDDIT', 'german', 'HI', 'whynot'])
     count_words('unpopular', ['down', 'vote', 'downvote',
                               'you', 'her', 'unpopular', 'politics'])
+    # count_words("hello", ['hello', 'hello', 'hello'])
+    # count_words("unpopular", ["react", "python", "java",
+    # "javascript", "scala", "no_result_for_this"])
